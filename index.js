@@ -7,8 +7,8 @@ bot.command('start', ctx => {
 	ctx.reply(`Hello ${ctx.from.first_name}!`);
 });
 
-bot.on('message', ctx => {
-	ctx.reply('You said: ' + ctx.message.text);
+bot.command('help', ctx => {
+	ctx.reply('This is a help message.');
 });
 
 bot.catch(err => {
