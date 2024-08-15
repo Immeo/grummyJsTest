@@ -9,6 +9,7 @@ bot.api.setMyCommands([
 	{ command: 'help', description: 'Show help message' }
 ]);
 
+// dont used camalCase because it call error, please use snake_case
 bot.command('start', ctx => {
 	ctx.reply(`Hello ${ctx.from.first_name}!`);
 });
