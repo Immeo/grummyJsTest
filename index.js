@@ -3,6 +3,12 @@ const { Bot, GrammyError, HttpError } = require('grammy');
 
 const bot = new Bot(process.env.KEY);
 
+// show menu command  of users
+bot.api.setMyCommands([
+	{ command: 'start', description: 'Start the bot' },
+	{ command: 'help', description: 'Show help message' }
+]);
+
 bot.command('start', ctx => {
 	ctx.reply(`Hello ${ctx.from.first_name}!`);
 });
