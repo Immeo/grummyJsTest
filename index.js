@@ -9,6 +9,17 @@ bot.api.setMyCommands([
 	{ command: 'help', description: 'Show help message' }
 ]);
 
+// example mesage filter to id users
+bot.on('msg').filter(
+	ctx => {
+		//  paste your user id
+		return ctx.from.id == process.env.USER_ID;
+	},
+	async ctx => {
+		await ctx.reply('You are authorized to use this bot.');
+	}
+);
+
 // dont used camalCase because it call error, please use snake_case
 bot.command('start', ctx => {
 	ctx.reply(`Hello ${ctx.from.first_name}!`);
