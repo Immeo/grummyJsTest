@@ -30,6 +30,12 @@ bot.hears('ping', async ctx => {
 	await ctx.reply('pong');
 });
 
+// example antispam hears
+bot.hears(/fuck/, async ctx => [
+	await ctx.reply('You say ban word'),
+	await ctx.deleteMessage()
+]);
+
 bot.command('help', ctx => {
 	ctx.reply('This is a help message.');
 });
