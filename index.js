@@ -10,19 +10,24 @@ bot.api.setMyCommands([
 ]);
 
 // example mesage filter to id users
-bot.on('msg').filter(
-	ctx => {
-		//  paste your user id
-		return ctx.from.id == process.env.USER_ID;
-	},
-	async ctx => {
-		await ctx.reply('You are authorized to use this bot.');
-	}
-);
+// bot.on('msg').filter(
+// 	ctx => {
+// 		//  paste your user id
+// 		return ctx.from.id == process.env.USER_ID;
+// 	},
+// 	async ctx => {
+// 		await ctx.reply('You are authorized to use this bot.');
+// 	}
+// );
 
 // dont used camalCase because it call error, please use snake_case
 bot.command('start', ctx => {
 	ctx.reply(`Hello ${ctx.from.first_name}!`);
+});
+
+// example of hears  spetific text
+bot.hears('ping', async ctx => {
+	await ctx.reply('pong');
 });
 
 bot.command('help', ctx => {
