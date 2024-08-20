@@ -21,8 +21,9 @@ bot.api.setMyCommands([
 // );
 
 // dont used camalCase because it call error, please use snake_case
-bot.command('start', ctx => {
-	ctx.reply(
+bot.command('start', async ctx => {
+	await ctx.react('🔥');
+	await ctx.reply(
 		`Hello ${ctx.from.first_name}! Github author bot <a href="https://github.com/Immeo"><span class="tg-spoiler">link</span></a>`,
 		{ parse_mode: 'HTML', disable_web_page_preview: true }
 	);
