@@ -1,12 +1,18 @@
 require('dotenv').config();
-const { Bot, GrammyError, HttpError, Keyboard } = require('grammy');
+const {
+	Bot,
+	GrammyError,
+	HttpError,
+	Keyboard,
+	InlineKeyboard
+} = require('grammy');
 
 const bot = new Bot(process.env.KEY);
 
 // show menu command  of users
 bot.api.setMyCommands([
 	{ command: 'start', description: 'Start the bot' },
-	{ command: 'help', description: 'Show help message' },
+	{ command: 'game', description: 'Play game' },
 	{ command: 'share', description: 'Sharing your contact' }
 ]);
 
@@ -51,6 +57,31 @@ bot.command('share', async ctx => {
 		.placeholder('Share?')
 		.resized();
 	await ctx.reply('Thx', { reply_markup: shareKb });
+});
+
+bot.command('game', async ctx => {
+	const inLine = new InlineKeyboard().text('Left', 'l').text('Right', 'r');
+	await ctx.reply('Left or rigth?', { reply_markup: inLine });
+});
+
+bot.callbackQuery(['l', 'r'], async ctx => {
+	// faster4 work command
+	await ctx.answerCallbackQuery();
+	console.log(ctx.callbackQuery);
+
+	if (ctx.callbackQuery.data == 'l') {
+		if (Math.random() > 0.5) {
+			await ctx.reply('You win!');
+		} else {
+			await ctx.reply('You not win =[');
+		}
+	} else if (ctx.callbackQuery.data == 'r') {
+		if (Math.random() > 0.5) {
+			await ctx.reply('You win!');
+		} else {
+			await ctx.reply('You not win =[');
+		}
+	}
 });
 
 bot.on(':contact', async ctx => {
