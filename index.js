@@ -7,7 +7,7 @@ const bot = new Bot(process.env.KEY);
 bot.api.setMyCommands([
 	{ command: 'start', description: 'Start the bot' },
 	{ command: 'help', description: 'Show help message' },
-	{ command: 'mood', description: 'bot ask how you are in the mood' }
+	{ command: 'share', description: 'Sharing your contact' }
 ]);
 
 // example mesage filter to id users
@@ -45,22 +45,36 @@ bot.hears(/fuck/, async ctx => [
 	await ctx.deleteMessage()
 ]);
 
-bot.command('mood', async ctx => {
-	const kb = new Keyboard()
-		.text('good')
-		.row()
-		.text('okay')
-		.row()
-		.text('bad')
+bot.command('share', async ctx => {
+	const shareKb = new Keyboard()
+		.requestContact('Share contact')
+		.placeholder('Share?')
 		.resized();
-	await ctx.reply('how is your mood?', { reply_markup: kb });
+	await ctx.reply('Thx', { reply_markup: shareKb });
 });
 
-bot.hears(['good', 'okay', 'bad'], async ctx => {
-	await ctx.reply('wow', {
+bot.on(':contact', async ctx => {
+	await ctx.reply('Thx for contact', {
 		reply_markup: { remove_keyboard: true }
 	});
 });
+
+// bot.command('mood', async ctx => {
+// 	const kb = new Keyboard()
+// 		.text('good')
+// 		.row()
+// 		.text('okay')
+// 		.row()
+// 		.text('bad')
+// 		.resized();
+// 	await ctx.reply('how is your mood?', { reply_markup: kb });
+// });
+
+// bot.hears(['good', 'okay', 'bad'], async ctx => {
+// 	await ctx.reply('wow', {
+// 		reply_markup: { remove_keyboard: true }
+// 	});
+// });
 
 bot.command('help', ctx => {
 	ctx.reply('This is a help message.');
