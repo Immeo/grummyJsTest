@@ -1,12 +1,13 @@
 require('dotenv').config();
-const { Bot, GrammyError, HttpError } = require('grammy');
+const { Bot, GrammyError, HttpError, Keyboard } = require('grammy');
 
 const bot = new Bot(process.env.KEY);
 
 // show menu command  of users
 bot.api.setMyCommands([
 	{ command: 'start', description: 'Start the bot' },
-	{ command: 'help', description: 'Show help message' }
+	{ command: 'help', description: 'Show help message' },
+	{ command: 'mood', description: 'bot ask how you are in the mood' }
 ]);
 
 // example mesage filter to id users
@@ -43,6 +44,11 @@ bot.hears(/fuck/, async ctx => [
 	await ctx.reply('You say ban word'),
 	await ctx.deleteMessage()
 ]);
+
+bot.command('mood', async ctx => {
+	const kb = new Keyboard().text('good').row().text('okay').row().text('bad');
+	await ctx.reply('how is your mood?', { reply_markup: kb });
+});
 
 bot.command('help', ctx => {
 	ctx.reply('This is a help message.');
