@@ -56,6 +56,12 @@ bot.command('mood', async ctx => {
 	await ctx.reply('how is your mood?', { reply_markup: kb });
 });
 
+bot.hears(['good', 'okay', 'bad'], async ctx => {
+	await ctx.reply('wow', {
+		reply_markup: { remove_keyboard: true }
+	});
+});
+
 bot.command('help', ctx => {
 	ctx.reply('This is a help message.');
 });
