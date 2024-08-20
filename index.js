@@ -25,6 +25,10 @@ bot.command('start', ctx => {
 	ctx.reply(`Hello ${ctx.from.first_name}!`);
 });
 
+bot.hears('ID', async ctx => {
+	await ctx.reply(`You id: ${ctx.from.id}`);
+});
+
 // example of hears  spetific text
 bot.hears('ping', async ctx => {
 	await ctx.reply('pong');
