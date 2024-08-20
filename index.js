@@ -46,7 +46,13 @@ bot.hears(/fuck/, async ctx => [
 ]);
 
 bot.command('mood', async ctx => {
-	const kb = new Keyboard().text('good').row().text('okay').row().text('bad');
+	const kb = new Keyboard()
+		.text('good')
+		.row()
+		.text('okay')
+		.row()
+		.text('bad')
+		.resized();
 	await ctx.reply('how is your mood?', { reply_markup: kb });
 });
 
