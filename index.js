@@ -7,14 +7,17 @@ const {
 	InlineKeyboard,
 	InputFile
 } = require('grammy');
+const { hydrate } = require('@grammyjs/hydrate');
 
 const bot = new Bot(process.env.KEY);
+bot.use(hydrate());
 
 // show menu command  of users
 bot.api.setMyCommands([
 	{ command: 'start', description: 'Start the bot' },
 	{ command: 'game', description: 'Play game' },
-	{ command: 'share', description: 'Sharing your contact' }
+	{ command: 'share', description: 'Sharing your contact' },
+	{ command: 'trying', description: 'aswsd' }
 ]);
 
 // example mesage filter to id users
@@ -39,6 +42,35 @@ bot.command('start', async ctx => {
 
 bot.hears('ID', async ctx => {
 	await ctx.reply(`You id: ${ctx.from.id}`);
+});
+const statusKb = new InlineKeyboard()
+	.text('Show status some', 'stat')
+	.text('close', 'close');
+
+const backGutton = new InlineKeyboard().text('Back to menu', 'back');
+
+bot.command('trying', async ctx => {
+	await ctx.reply('What do you need?', {
+		reply_markup: statusKb
+	});
+});
+
+bot.callbackQuery(['stat', 'close', 'back'], async ctx => {
+	if (ctx.callbackQuery.data == 'stat') {
+		await ctx.callbackQuery.message.editText('All fine', {
+			reply_markup: backGutton
+		});
+		ctx.answerCallbackQuery();
+	} else if (ctx.callbackQuery.data == 'close') {
+		await ctx.callbackQuery.message.editText('Closed', {
+			reply_markup: backGutton
+		});
+		ctx.answerCallbackQuery();
+	} else {
+		await ctx.callbackQuery.message.editText('What do you need?', {
+			reply_markup: statusKb
+		});
+	}
 });
 
 // example of hears  spetific text
