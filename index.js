@@ -4,7 +4,8 @@ const {
 	GrammyError,
 	HttpError,
 	Keyboard,
-	InlineKeyboard
+	InlineKeyboard,
+	InputFile
 } = require('grammy');
 
 const bot = new Bot(process.env.KEY);
@@ -60,26 +61,33 @@ bot.command('share', async ctx => {
 });
 
 bot.command('game', async ctx => {
-	const inLine = new InlineKeyboard().text('Left', 'l').text('Right', 'r');
-	await ctx.reply('Left or rigth?', { reply_markup: inLine });
+	const inLine = new InlineKeyboard().text('Eagle', 'e').text('Tails', 't');
+	await ctx.reply('Eagle or tails?', { reply_markup: inLine });
 });
 
-bot.callbackQuery(['l', 'r'], async ctx => {
+bot.callbackQuery(['e', 't'], async ctx => {
 	// faster4 work command
 	await ctx.answerCallbackQuery();
-	console.log(ctx.callbackQuery);
+	await ctx.replyWithAnimation(
+		new InputFile('./assets/image/coin-tossing.gif')
+	);
+	await ctx.reply('Toss a coin...');
 
-	if (ctx.callbackQuery.data == 'l') {
+	if (ctx.callbackQuery.data == 'e') {
 		if (Math.random() > 0.5) {
+			await ctx.replyWithPhoto(new InputFile('./assets/image/eagle.png'));
 			await ctx.reply('You win!');
 		} else {
-			await ctx.reply('You not win =[');
+			await ctx.replyWithPhoto(new InputFile('./assets/image/tails.png'));
+			await ctx.reply('You lost...');
 		}
-	} else if (ctx.callbackQuery.data == 'r') {
+	} else if (ctx.callbackQuery.data == 't') {
 		if (Math.random() > 0.5) {
+			await ctx.replyWithPhoto(new InputFile('./assets/image/tails.png'));
 			await ctx.reply('You win!');
 		} else {
-			await ctx.reply('You not win =[');
+			await ctx.replyWithPhoto('./assets/image/eagle.png');
+			await ctx.reply('You lost...');
 		}
 	}
 });
